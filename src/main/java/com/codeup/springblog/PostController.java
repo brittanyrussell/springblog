@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class PostController {
     @GetMapping("/posts")
-    @ResponseBody
     public String posts() {
-        return "posts index page";
+        return "posts/index";
     }
     @GetMapping("/posts/{id}")
     @ResponseBody
