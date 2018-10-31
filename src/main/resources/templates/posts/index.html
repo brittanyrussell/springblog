@@ -1,12 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header :: head"/>
 
 <body>
-<head th:replace="fragments/header :: header"/>
+<div th:replace="fragments/header :: head"></div>
 
-<nav th:replace="fragments/navbar :: navbar" />
+<nav th:replace="fragments/navbar :: navbar"></nav>
 <h1>Welcome to viewing the posts</h1>
-<footer th:replace="fragments/footer :: footer"/>
+<div th:each="post : ${posts}">
+    <h2 th:text="${post.title}"></h2>
+    <p th:text="${post.description}"></p>
+</div>
+
+<footer th:replace="fragments/footer :: footer"></footer>
 
 </body>
 </html>
