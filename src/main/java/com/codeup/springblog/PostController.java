@@ -4,13 +4,7 @@ package com.codeup.springblog;
 import com.codeup.springblog.services.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
@@ -23,7 +17,7 @@ public class PostController {
         }
     @GetMapping("/posts")
     public String posts(Model vModel) {
-            vModel.addAttribute("posts", postService.findAll());
+            vModel.addAttribute("posts", postService.all());
 
 
         return "posts/index";
@@ -34,17 +28,47 @@ public class PostController {
         return "posts/show";
     }
     @GetMapping("/posts/create")
-    @ResponseBody
-    public String create() {
-        return "view the form for creating a post";
+    public String create(Model vModel) {
+            vModel.addAttribute("post", new Post());
+        return "posts/create";
 
     }
 
     @PostMapping("/posts/create")
-    @ResponseBody
-    public String createTwo() {
-        return "create a new post";
+    public String createPost(@ModelAttribute Post post, Model vModel) {
+            postService.save(post);
+        vModel.addAttribute("posts", postService.all());
+
+        return "posts/index";
+
+    }
+    @GetMapping("/posts/{id}/edit")
+    public String editPost(@ModelAttribute Post post, Model vModel, @PathVariable long id) {
+        vModel.addAttribute("post", postService.findOne(id));
+        return "posts/edit";
+
     }
 
+    @GetMapping("/posts/{id}/delete")
+    public String deletePost(@ModelAttribute Post post, Model vModel, @PathVariable long id) {
+        vModel.addAttribute("post", postService.findOne(id));
+        return "posts/delete";
 
+    }
+    @PostMapping("/posts/{id}/delete")
+    public String deletePost(@ModelAttribute Post post, Model vModel) {
+            postService.delete(post.getId());
+            vModel.addAttribute("posts", postService.all());
+
+
+            return "posts/index";
+    }
+
+    @PostMapping("/posts/{id}/edit")
+    public String editPost(@ModelAttribute Post post, Model vModel) {
+         postService.edit(post);
+        vModel.addAttribute("posts", postService.all());
+        return "posts/index";
+
+    }
 }
