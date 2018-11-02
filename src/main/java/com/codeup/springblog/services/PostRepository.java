@@ -1,6 +1,6 @@
 package com.codeup.springblog.services;
 
-import com.codeup.springblog.Post;
+import com.codeup.springblog.models.Post;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

@@ -1,5 +1,7 @@
-package com.codeup.springblog;
+package com.codeup.springblog.models;
 
+
+import com.codeup.springblog.models.User;
 
 import javax.persistence.*;
 
@@ -16,14 +18,18 @@ public class Post {
     @Column(nullable = false)
     private String description;
 
+    @OneToOne
+    private User user;
+
     public Post() {
 
     }
 
-    public Post(String title, String description, long id) {
+    public Post(User user, String title, String description, long id) {
         this.title = title;
         this.description = description;
         this.id = id;
+        this.user = user;
     }
 
     public void setId(long id) {
@@ -41,6 +47,15 @@ public class Post {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+
+        return user;
     }
 
     public void setDescription(String description) {
