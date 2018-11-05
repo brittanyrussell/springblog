@@ -2,9 +2,11 @@ package com.codeup.springblog.controllers;
 
 
 import com.codeup.springblog.models.Post;
+import com.codeup.springblog.models.User;
 import com.codeup.springblog.services.PostService;
 import com.codeup.springblog.services.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -41,11 +43,17 @@ public class PostController {
 
     @PostMapping("/posts/create")
     public String createPost(@ModelAttribute Post post, Model vModel) {
-        post.setUser(userRepo.findOne(1L));
-            postService.save(post);
+        User logUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        post.setUser(userRepo.findOne(logUser.getId()));
+//        post.setCategories(cats);
+
+        Post savePost = postService.save(post);
+//        post.setUser(userRepo.findOne(1L));
+//            postService.save(post);
         vModel.addAttribute("posts", postService.all());
 
-        return "posts/index";
+        return "posts/index" + savePost.getId();
 
     }
     @GetMapping("/posts/{id}/edit")

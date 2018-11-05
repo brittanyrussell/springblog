@@ -18,7 +18,7 @@ public class Post {
     @Column(nullable = false)
     private String description;
 
-    @OneToOne
+    @ManyToOne
     private User user;
 
     public Post() {
