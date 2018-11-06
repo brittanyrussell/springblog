@@ -25,10 +25,9 @@ public class PostController {
     @GetMapping("/posts")
     public String posts(Model vModel) {
             vModel.addAttribute("posts", postService.all());
-
-
         return "posts/index";
     }
+
     @GetMapping("/posts/{id}")
     public String individualPost(@PathVariable int id, Model vModel) {
         vModel.addAttribute("post", postService.findOne(id));
