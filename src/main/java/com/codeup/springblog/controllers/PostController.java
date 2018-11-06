@@ -47,12 +47,12 @@ public class PostController {
         post.setUser(userRepo.findOne(logUser.getId()));
 //        post.setCategories(cats);
 
-        Post savePost = postService.save(post);
+         postService.save(post);
 //        post.setUser(userRepo.findOne(1L));
 //            postService.save(post);
         vModel.addAttribute("posts", postService.all());
 
-        return "posts/index" + savePost.getId();
+        return "posts/index";
 
     }
     @GetMapping("/posts/{id}/edit")
